@@ -1,0 +1,26 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: cloudshare
+service: cloudshare-test
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev-test'}
+  region: ${opt:region, 'us-east-1'}
+
+functions:
+  app:
+    handler: lambda.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+      - http:
+          path: /{proxy+}
+          method: ANY
+
+package:
+  include:
+    - node_modules/**
+    - '*.js'
+    - 'src/**'
