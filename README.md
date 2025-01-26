@@ -36,7 +36,7 @@ Try the platform here: [cloudshare.swayam.tech](https://cloudshare.swayam.tech)
 
 ## **How It Works**
 
-1. **File Upload**: Users upload files, which are encrypted on the client-side before being sent to AWS S3 using a presigned URL.
+1. **Multiple File Upload**: Users upload one or more files, which are encrypted on the client-side before being sent to AWS S3 using a presigned URL.
 2. **Custom Short URL**: A custom or randomly generated short URL is created and stored in DynamoDB.
 3. **File Sharing**: Users receive a shareable link and a QR code for easy access.
 4. **Access Control**: Download limits and expiration times are validated before granting file access.
@@ -61,7 +61,6 @@ Try the platform here: [cloudshare.swayam.tech](https://cloudshare.swayam.tech)
 ## **What's Next**
 
 - Increase the file upload limit beyond 50 MB as the platform scales.
-- Add multi-file upload with bulk encryption and zipping.
 - Implement advanced analytics for download tracking.
 - Support additional storage providers like Google Cloud and Azure.
 - Integrate AI-driven insights for detecting misuse or suspicious activity.
