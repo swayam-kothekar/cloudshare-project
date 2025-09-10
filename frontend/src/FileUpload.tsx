@@ -128,7 +128,6 @@ const FileUpload: React.FC = () => {
       const { encryptedFile, key } = await encryptFile(zipFile);
 
       const { data } = await axios.post<{ uploadUrl: string; keyName: string }>(
-        // "http://localhost:3000/generate-upload-url",
         "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/generate-upload-url",
         {
           fileType: "application/octet-stream",
@@ -153,7 +152,6 @@ const FileUpload: React.FC = () => {
       console.log(expiryTime);
       
       const { data: downloadData } = await axios.post<{ downloadUrl: string }>(
-        // "http://localhost:3000/generate-download-url",
         "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/generate-download-url",
         {
           keyName: keyName,
@@ -169,7 +167,7 @@ const FileUpload: React.FC = () => {
       console.log(downloadData);
       
       const shortUrl = customShortUrl || crypto.getRandomValues(new Uint8Array(4)).reduce((acc, val) => acc + val.toString(16).padStart(2, '0'), '')
-      const downloadUrl = `https://cloudshare.swayam.tech/download?url=${encodeURIComponent(
+      const downloadUrl = `https://cloudshare.swayamk.dev/download?url=${encodeURIComponent(
         downloadData.downloadUrl
       )}&key=${keyBase64}&shortUrl=${shortUrl}`;
 

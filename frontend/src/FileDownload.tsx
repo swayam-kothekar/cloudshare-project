@@ -162,11 +162,11 @@ const FileDownload: React.FC = () => {
 
         setStatus("Files extracted successfully!");
         await axios.post(
-        "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/decrement-download-limit", {
-          keyName: keyName,
-        }
-      )
-      } else{
+          "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/decrement-download-limit", {
+            keyName: keyName,
+          }
+        )
+      } else {
         setStatus("Oops! Download Link Expired or File Deleted")
       }
 
