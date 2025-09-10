@@ -161,24 +161,42 @@ const FileDownload: React.FC = () => {
         await extractZip(decryptedBlob);
 
         setStatus("Files extracted successfully!");
-        await axios.post(
-          "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/decrement-download-limit", {
-            keyName: keyName,
-          }
-        )
+        
+        // Try to decrement download limit, but don't fail the entire process if this fails
+        try {
+          await axios.post(
+            "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/decrement-download-limit", {
+              keyName: keyName,
+            }
+          );
+        } catch (decrementError) {
+          console.warn("Failed to decrement download limit:", decrementError);
+          // Don't throw this error - the file download was successful
+        }
       } else {
         setStatus("Oops! Download Link Expired or File Deleted")
       }
 
       
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response?.status === 403) {
-        console.error("File download or decryption failed:", err.message);
-        setStatus("Oops! Download Link Expired or File Deleted");
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 403) {
+          console.error("File access forbidden:", err.message);
+          setStatus("Oops! Download Link Expired or File Deleted");
+        } else if (err.response?.status === 404) {
+          console.error("File not found:", err.message);
+          setStatus("Oops! File not found or link has expired");
+        } else if (err.config?.url?.includes('get-download-limit')) {
+          console.error("Failed to check download limit:", err.message);
+          setStatus("Failed to verify download permissions. Please try again.");
+        } else {
+          console.error("Network error during file download:", err.message);
+          setStatus(`Network error: ${err.message}`);
+        }
       } else {
-        console.error("File download or decryption failed:", err);
+        console.error("File processing failed:", err);
         setStatus(
-          `File download or decryption failed: ${
+          `File processing failed: ${
             err instanceof Error ? err.message : String(err)
           }`
         );
