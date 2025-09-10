@@ -118,7 +118,7 @@ const generateShortUrl = async (req, res) => {
         });
 
         await docClient.send(putCommand);
-        const shortenedUrl = `https://cloudshare.swayam.tech/share/${shortUrl}`;
+        const shortenedUrl = `https://cloudshare.swayamk.dev/share/${shortUrl}`;
 
         res.status(200).json({ shortenedUrl });
     } catch (err) {
