@@ -6,7 +6,7 @@ CloudShare is a secure, anonymous, and serverless file-sharing platform designed
 
 ## **Live Demo**
 
-Try the platform here: [cloudshare.swayam.tech](https://cloudshare.swayam.tech)
+Try the platform here: [cloudshare.swayamk.dev](https://cloudshare.swayamk.dev)
 
 ---
 
