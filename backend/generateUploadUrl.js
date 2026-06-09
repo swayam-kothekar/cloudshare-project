@@ -1,6 +1,6 @@
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 
 // R2 uses the S3-compatible API — only the endpoint + credentials change
 const r2Client = new S3Client({
@@ -14,7 +14,7 @@ const r2Client = new S3Client({
 
 const generateUploadUrl = async (req, res) => {
   const { fileType } = req.body;
-  const keyName = `${uuidv4()}.encrypted`;
+  const keyName = `${crypto.randomUUID()}.encrypted`;
 
   const params = {
     Bucket: process.env.R2_BUCKET_NAME,
