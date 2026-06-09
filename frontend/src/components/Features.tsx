@@ -11,7 +11,7 @@ import cubeLeg from "../assets/cube-leg.png";
 interface FeatureProps {
   title: string;
   description: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
 }
 
 const features: FeatureProps[] = [

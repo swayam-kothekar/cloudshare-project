@@ -66,7 +66,7 @@ const FileDownload: React.FC = () => {
 
     const cryptoKey = await window.crypto.subtle.importKey(
       "raw",
-      key,
+      key as BufferSource,
       { name: "AES-GCM" },
       false,
       ["decrypt"]

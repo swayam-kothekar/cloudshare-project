@@ -3,7 +3,7 @@ import { ClockIcon, LinkIcon, ShareIcon, UploadIcon } from "./Icons";
 import React from "react";
 
 interface FeatureProps {
-  icon: JSX.Element;
+  icon: React.ReactNode;
   title: string;
   description: string;
 }
