@@ -128,7 +128,7 @@ const FileUpload: React.FC = () => {
       const { encryptedFile, key } = await encryptFile(zipFile);
 
       const { data } = await axios.post<{ uploadUrl: string; keyName: string }>(
-        "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/generate-upload-url",
+        `${import.meta.env.VITE_API_BASE_URL}/generate-upload-url`,
         {
           fileType: "application/octet-stream",
         }
@@ -152,14 +152,14 @@ const FileUpload: React.FC = () => {
       console.log(expiryTime);
       
       const { data: downloadData } = await axios.post<{ downloadUrl: string }>(
-        "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/generate-download-url",
+        `${import.meta.env.VITE_API_BASE_URL}/generate-download-url`,
         {
           keyName: keyName,
           expiry: parseInt(expiryTime, 10),
         }
       );
       
-      await axios.post("https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/tag-file", {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/tag-file`, {
         keyName: keyName,
         downloadLimit: downloadLimit
       });
@@ -167,12 +167,12 @@ const FileUpload: React.FC = () => {
       console.log(downloadData);
       
       const shortUrl = customShortUrl || crypto.getRandomValues(new Uint8Array(4)).reduce((acc, val) => acc + val.toString(16).padStart(2, '0'), '')
-      const downloadUrl = `https://cloudshare.swayamk.dev/download?url=${encodeURIComponent(
+      const downloadUrl = `${import.meta.env.VITE_FRONTEND_BASE_URL}/download?url=${encodeURIComponent(
         downloadData.downloadUrl
       )}&key=${keyBase64}&shortUrl=${shortUrl}`;
 
       try {
-        const {data: shortUrlData} = await axios.post("https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/generate-short-url", {
+        const {data: shortUrlData} = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/generate-short-url`, {
           longUrl: downloadUrl,
           shortUrl: shortUrl,
         });

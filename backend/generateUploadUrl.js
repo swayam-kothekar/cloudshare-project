@@ -1,26 +1,29 @@
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
-// require('dotenv').config();
 const { v4: uuidv4 } = require('uuid');
 
-const s3Client = new S3Client({
-  region: "us-east-1",
+// R2 uses the S3-compatible API — only the endpoint + credentials change
+const r2Client = new S3Client({
+  region: 'auto',
+  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  },
 });
 
 const generateUploadUrl = async (req, res) => {
   const { fileType } = req.body;
-  
   const keyName = `${uuidv4()}.encrypted`;
 
   const params = {
-    Bucket: "cloudshare-files",
+    Bucket: process.env.R2_BUCKET_NAME,
     Key: keyName,
     ContentType: fileType,
   };
 
   try {
-    const uploadUrl = await getSignedUrl(s3Client, new PutObjectCommand(params), { expiresIn: 900 });
-    console.log(uploadUrl);
+    const uploadUrl = await getSignedUrl(r2Client, new PutObjectCommand(params), { expiresIn: 900 });
     res.status(200).json({ uploadUrl, keyName });
   } catch (err) {
     console.error(`Error generating pre-signed URL: ${err.message}`);

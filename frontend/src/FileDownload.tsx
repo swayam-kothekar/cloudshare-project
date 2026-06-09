@@ -41,7 +41,7 @@ const FileDownload: React.FC = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const shortUrl = params.get("shortUrl");
-    setDownloadLink(`https://cloudshare.swayam.tech/share/${shortUrl}`);
+    setDownloadLink(`${import.meta.env.VITE_API_BASE_URL}/share/${shortUrl}`);
   }, []);
 
   const base64ToUint8Array = (base64: string): Uint8Array => {
@@ -73,9 +73,9 @@ const FileDownload: React.FC = () => {
     );
 
     const decryptedContent = await window.crypto.subtle.decrypt(
-      { name: "AES-GCM", iv: new Uint8Array(iv) },
+      { name: "AES-GCM", iv: new Uint8Array(iv as ArrayBuffer) },
       cryptoKey,
-      data
+      data as ArrayBuffer
     );
 
     const dv = new DataView(decryptedContent);
@@ -138,7 +138,7 @@ const FileDownload: React.FC = () => {
       }
       setStatus("Loading Files...");
       const { data: downloadLimitData } = await axios.get(
-        "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/get-download-limit",
+        `${import.meta.env.VITE_API_BASE_URL}/get-download-limit`,
         {
           params: { keyName: keyName }
         }
@@ -165,7 +165,7 @@ const FileDownload: React.FC = () => {
         // Try to decrement download limit, but don't fail the entire process if this fails
         try {
           await axios.post(
-            "https://ko63w7zadl.execute-api.us-east-1.amazonaws.com/dev-test/decrement-download-limit", {
+            `${import.meta.env.VITE_API_BASE_URL}/decrement-download-limit`, {
               keyName: keyName,
             }
           );
