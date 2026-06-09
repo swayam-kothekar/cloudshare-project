@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const { generateUploadUrl } = require('./generateUploadUrl');
 const { generateDownloadUrl } = require('./generateDownloadUrl');
@@ -9,8 +8,7 @@ const { tagFile, getDownloadLimit, decrementDownloadLimit } = require('./tagFile
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
-app.options('*', cors());
+app.use(express.json());
 
 app.post('/generate-upload-url', generateUploadUrl);
 
@@ -26,6 +24,9 @@ app.get('/get-download-limit', getDownloadLimit);
 
 app.post('/decrement-download-limit', decrementDownloadLimit);
 
-app.listen(3000)
+// Only listen when running locally (not on Vercel serverless)
+if (require.main === module) {
+  app.listen(3000, () => console.log('Backend running on http://localhost:3000'));
+}
 
 module.exports = app;
