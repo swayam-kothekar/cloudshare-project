@@ -41,7 +41,7 @@ const FileDownload: React.FC = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const shortUrl = params.get("shortUrl");
-    setDownloadLink(`${import.meta.env.VITE_API_BASE_URL}/share/${shortUrl}`);
+    setDownloadLink(`${import.meta.env.VITE_FRONTEND_BASE_URL}/share/${shortUrl}`);
   }, []);
 
   const base64ToUint8Array = (base64: string): Uint8Array => {
