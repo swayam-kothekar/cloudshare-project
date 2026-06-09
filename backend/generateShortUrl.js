@@ -27,7 +27,7 @@ const generateShortUrl = async (req, res) => {
       createdAt: new Date().toISOString(),
     }));
 
-    const shortenedUrl = `${process.env.BASE_URL}/share/${shortUrl}`;
+    const shortenedUrl = `${process.env.BACKEND_BASE_URL}/share/${shortUrl}`;
     res.status(200).json({ shortenedUrl });
   } catch (err) {
     console.error(`Error generating shortened URL: ${err.message}`);
