@@ -172,12 +172,12 @@ const FileUpload: React.FC = () => {
       )}&key=${keyBase64}&shortUrl=${shortUrl}`;
 
       try {
-        const {data: shortUrlData} = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/generate-short-url`, {
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/generate-short-url`, {
           longUrl: downloadUrl,
           shortUrl: shortUrl,
         });
         
-        setDownloadLink(shortUrlData.shortenedUrl);
+        setDownloadLink(`${import.meta.env.VITE_FRONTEND_BASE_URL}/share/${shortUrl}`);
         setShortUrlError(""); // Clear any previous error
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 409) {
