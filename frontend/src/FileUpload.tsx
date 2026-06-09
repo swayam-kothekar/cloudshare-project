@@ -420,7 +420,7 @@ const FileUpload: React.FC = () => {
                 placeholder="Enter custom short URL (e.g. my-files)"
                 value={customShortUrl}
                 onChange={(e) => setCustomShortUrl(e.target.value)}
-                className="w-2/4 bg-gray-700 bg-opacity-50 border-gray-600"
+                className="w-2/4 bg-gray-700 bg-opacity-50 border-gray-600 text-gray-100 placeholder:text-gray-400"
               />
             </div>
             {shortUrlError && (
