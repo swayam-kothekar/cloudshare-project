@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="cloudshare-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9333ea" />
+      <stop offset="50%" stop-color="#c026d3" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+    <filter id="subtle-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Background container with brand gradient -->
+  <rect width="64" height="64" rx="16" fill="url(#cloudshare-gradient)" />
+
+  <!-- Lock Shackle -->
+  <path
+    d="M23 29 V22 C23 17.03 27.03 13 32 13 C36.97 13 41 17.03 41 22 V29"
+    stroke="#ffffff"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Lock Body with soft drop shadow -->
+  <rect
+    x="14"
+    y="28"
+    width="36"
+    height="25"
+    rx="6"
+    fill="#ffffff"
+    filter="url(#subtle-shadow)"
+  />
+
+  <!-- Keyhole detail -->
+  <circle cx="32" cy="38" r="3" fill="#a82ddb" />
+  <path
+    d="M30.7 38.5 L29.8 45 H34.2 L33.3 38.5 Z"
+    fill="#a82ddb"
+  />
+</svg>
