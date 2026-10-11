@@ -3,7 +3,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import JSZip from "jszip";
 import { Button } from "./components/ui/button";
-import { Download, File, UploadCloud } from "lucide-react";
+import {
+  Download,
+  FileText,
+  UploadCloud,
+  ShieldCheck,
+  Copy,
+  Lock,
+  QrCode,
+  Loader2,
+} from "lucide-react";
 import { Card, CardContent } from "./components/ui/card";
 import { QRCode } from "react-qrcode-logo";
 import {
@@ -15,6 +24,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
 
 interface ExtractedFile {
   name: string;
@@ -256,252 +266,172 @@ const FileDownload: React.FC = () => {
   };
 
   return (
-  //   <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 flex flex-col">
-  //     <header className="p-6 flex justify-between items-center bg-gray-800 bg-opacity-50 backdrop-blur-sm">
-  //       <div className="flex items-center space-x-3">
-  //         <Cloud className="h-10 w-10 text-teal-400" />
-  //         <span className="text-2xl font-bold text-teal-400">CloudShare</span>
-  //       </div>
-  //     </header>
-
-  //     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-  //       <svg
-  //         className="absolute bottom-0 left-0 w-full"
-  //         viewBox="0 0 1440 320"
-  //         preserveAspectRatio="none"
-  //       >
-  //         <path
-  //           fill="rgba(16, 185, 129, 0.05)"
-  //           fillOpacity="1"
-  //           d="M0,32L48,80C96,128,192,224,288,229.3C384,235,480,149,576,128C672,107,768,149,864,154.7C960,160,1056,128,1152,112C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-  //         ></path>
-  //       </svg>
-  //     </div>
-
-  //     <main className="flex-grow flex items-center justify-center p-6 relative">
-  //       <Card className="w-full max-w-6xl bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-2xl rounded-2xl overflow-hidden">
-  //         <CardContent className="p-10">
-  //           <div className="flex flex-col md:flex-row gap-10">
-  //           <div className="w-full max-w-xl mx-auto">
-  //   <h2 className="text-3xl font-semibold mb-6 text-teal-300">
-  //     Your Files
-  //   </h2>
-  //   {extractedFiles.length > 0 && (
-  //     <div className="space-y-4">
-  //       <ul className="space-y-3 max-h-96 overflow-y-auto pr-1 custom-scrollbar">
-  //         {extractedFiles.map((file, index) => (
-  //           <li
-  //             key={index}
-  //             className="flex justify-between items-center bg-gray-700 bg-opacity-50 p-4 rounded-xl hover:bg-opacity-70 transition-all duration-200 cursor-pointer group w-full"
-  //             onClick={() => downloadFile(file)}
-  //           >
-  //             <span className="flex truncate mr-3 text-gray-300 group-hover:text-white transition-colors duration-200">
-  //             <File  className="mr-2 h-5 w-5" />
-  //               {file.name}
-  //             </span>
-  //             <Download className="h-5 w-5 flex-shrink-0 text-teal-500 group-hover:text-teal-400 transition-colors duration-200" />
-  //           </li>
-  //         ))}
-  //       </ul>
-  //       <Button
-  //         onClick={downloadAllFiles}
-  //         className="w-full bg-teal-500 hover:bg-teal-600 text-white py-4 text-lg flex items-center justify-center"
-  //       >
-  //         <Download className="mr-2 h-5 w-5" /> Download All
-  //       </Button>
-  //     </div>
-  //   )}
-  //   {status && (
-  //     <p className="text-teal-400 mt-6 text-center">{status}</p>
-  //   )}
-  // </div>
-
-  //             <div className="w-full border-t md:border-l md:border-t-0 md:w-1/2 space-y-6  pt-6 md:pt-0 md:pl-10">
-  //               <h1 className="text-5xl font-bold mb-2 text-teal-400">
-  //                 You've Got Files!
-  //               </h1>
-  //               <p className="text-2xl mb-4 text-gray-300">
-  //                 Your secure files are ready for download.
-  //               </p>
-  //               <div className="bg-gray-700 bg-opacity-50 p-6 rounded-xl shadow-inner">
-  //                 <h3 className="text-xl font-semibold mb-3 text-teal-300">
-  //                   End-to-End Encryption
-  //                 </h3>
-  //                 <p className="text-gray-300">
-  //                   Our state-of-the-art encryption ensures your files remain
-  //                   private and secure throughout the entire transfer process.
-  //                 </p>
-  //               </div>
-
-  //               <div className="space-y-4">
-  //                 <h2 className="text-2xl font-semibold text-teal-300">
-  //                   Share Again
-  //                 </h2>
-  //                 <div className="flex items-center space-x-2 bg-gray-700 bg-opacity-50 p-3 rounded-xl">
-  //                   <input
-  //                     type="text"
-  //                     value={window.location.href}
-  //                     readOnly
-  //                     className="flex-grow bg-transparent border-none focus:outline-none text-gray-300"
-  //                   />
-  //                 </div>
-  //                 <div className="flex space-x-4">
-  //                   <Button
-  //                     onClick={copyLinkToClipboard}
-  //                     className="flex-1 bg-teal-500 hover:bg-teal-600"
-  //                   >
-  //                     {buttonText}
-  //                   </Button>
-  //                   <Dialog>
-  //                     <DialogTrigger asChild>
-  //                       <Button className="flex-1 bg-blue-500 hover:bg-blue-600">
-  //                         Show QR Code
-  //                       </Button>
-  //                     </DialogTrigger>
-  //                     <DialogContent className="sm:max-w-md">
-  //                       <DialogHeader>
-  //                         <DialogTitle>QR Code for Download Link</DialogTitle>
-  //                         <DialogDescription>
-  //                           Scan this QR code to access the download link.
-  //                         </DialogDescription>
-  //                       </DialogHeader>
-  //                       <div className="flex justify-center py-4">
-  //                         <QRCode value={downloadLink} size={256} />
-  //                       </div>
-  //                     </DialogContent>
-  //                   </Dialog>
-  //                 </div>
-  //               </div>
-
-  //               <Button
-  //                 variant="outline"
-  //                 onClick={() => navigate("/upload")}
-  //                 className="bg-teal-500 hover:bg-teal-600 text-white w-full py-3 text-lg"
-  //               >
-  //                 <UploadCloud className="mr-2 h-5 w-5" /> Upload More Files
-  //               </Button>
-  //             </div>
-  //           </div>
-  //         </CardContent>
-  //       </Card>
-  //     </main>
-  //   </div>
-
-<div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 flex flex-col">
-      {/* <header className="p-6 flex justify-between items-center bg-gray-800 bg-opacity-50 backdrop-blur-sm">
-        <div className="flex items-center space-x-3">
-          <Cloud className="h-10 w-10 text-pink-400" />
-          <span className="text-2xl font-bold text-pink-400">CloudShare</span>
-        </div>
-      </header> */}
-      <Navbar />
-
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
-          <path
-            fill="rgba(219, 39, 119, 0.05)"
-            fillOpacity="1"
-            d="M0,32L48,80C96,128,192,224,288,229.3C384,235,480,149,576,128C672,107,768,149,864,154.7C960,160,1056,128,1152,112C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-          ></path>
-        </svg>
+    <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
+      {/* Background ambient glows */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-purple-600/15 via-fuchsia-600/5 to-transparent blur-[140px]" />
+        <div className="absolute top-[60%] -right-32 w-[500px] h-[500px] bg-pink-600/5 blur-[120px] rounded-full" />
       </div>
 
-      <main className="flex-grow flex items-center justify-center p-6 relative">
-        <Card className="w-full max-w-6xl bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-2xl rounded-2xl overflow-hidden">
-          <CardContent className="p-10">
-            <div className="flex flex-col md:flex-row gap-10">
-              <div className="w-full max-w-xl mx-auto">
-                <h2 className="text-3xl font-semibold mb-6 text-pink-300">Your Files</h2>
-                {extractedFiles.length > 0 && (
-                  <div className="space-y-4">
-                    <ul className="space-y-3 max-h-96 overflow-y-auto pr-1 custom-scrollbar">
-                      {extractedFiles.map((file, index) => (
-                        <li
-                          key={index}
-                          className="flex justify-between items-center bg-gray-700 bg-opacity-50 p-4 rounded-xl hover:bg-opacity-70 transition-all duration-200 cursor-pointer group w-full"
-                          onClick={() => downloadFile(file)}
-                        >
-                          <span className="flex truncate mr-3 text-gray-300 group-hover:text-white transition-colors duration-200">
-                            <File className="mr-2 h-5 w-5" />
-                            {file.name}
-                          </span>
-                          <Download className="h-5 w-5 flex-shrink-0 text-pink-500 group-hover:text-pink-400 transition-colors duration-200" />
-                        </li>
-                      ))}
-                    </ul>
-                    <Button
-                      onClick={downloadAllFiles}
-                      className="w-full py-4 text-lg flex items-center justify-center"
-                    >
-                      <Download className="mr-2 h-5 w-5" /> Download All
-                    </Button>
-                  </div>
-                )}
-                {status && <p className="text-pink-400 mt-6 text-center">{status}</p>}
-              </div>
+      <Navbar />
 
-              <div className="w-full border-t md:border-l md:border-t-0 md:w-1/2 space-y-6 pt-6 md:pt-0 md:pl-10">
-                <h1 className="text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
-                  You've Got Files!
-                </h1>
-                <p className="text-2xl mb-4 font-semibold text-blue-300">Your secure files are ready for download.</p>
-                <div className="bg-gray-700 bg-opacity-50 p-6 rounded-xl shadow-inner">
-                  <h3 className="text-xl font-semibold mb-3 text-blue-300">End-to-End Encryption</h3>
-                  <p className="text-gray-300">
-                    Our state-of-the-art encryption ensures your files remain private and secure throughout the entire transfer process.
+      <main className="flex-grow flex items-center justify-center px-4 py-12 md:py-16 relative z-10 max-w-5xl mx-auto w-full">
+        <Card className="w-full rounded-2xl border border-white/10 bg-slate-900/70 backdrop-blur-2xl shadow-2xl overflow-hidden">
+          <CardContent className="p-6 sm:p-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+              {/* Left Column: Files Download List */}
+              <div className="lg:col-span-7 space-y-6">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs font-semibold text-purple-300 mb-3">
+                    <Lock className="h-3.5 w-3.5" />
+                    <span>DECRYPTED IN BROWSER</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                    Your Files Are Ready
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                    Click any file to download individually or grab the entire bundle below.
                   </p>
                 </div>
 
-                <div className="space-y-4">
-                  <h2 className="text-2xl font-semibold text-blue-300">Share Again</h2>
-                  <div className="flex items-center space-x-2 bg-gray-700 bg-opacity-50 p-3 rounded-xl">
+                {extractedFiles.length > 0 ? (
+                  <div className="space-y-4">
+                    <ul className="space-y-2.5 max-h-80 overflow-y-auto pr-1 custom-scrollbar">
+                      {extractedFiles.map((file, index) => (
+                        <li
+                          key={index}
+                          className="flex justify-between items-center bg-slate-950/70 border border-white/10 p-3.5 rounded-xl hover:border-purple-500/40 hover:bg-white/[0.04] transition-all duration-200 cursor-pointer group"
+                          onClick={() => downloadFile(file)}
+                        >
+                          <span className="flex items-center truncate mr-3 text-slate-300 group-hover:text-white transition-colors text-sm font-medium">
+                            <FileText className="mr-2.5 h-4 w-4 text-purple-400 flex-shrink-0" />
+                            <span className="truncate">{file.name}</span>
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold text-white bg-purple-600/80 group-hover:bg-purple-500 flex-shrink-0 transition-colors">
+                            <Download className="h-3.5 w-3.5" />
+                            <span>Download</span>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <Button
+                      onClick={downloadAllFiles}
+                      className="w-full py-3.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 shadow-xl shadow-purple-500/25 flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.01]"
+                    >
+                      <Download className="h-4 w-4" />
+                      <span>Download All Files ({extractedFiles.length})</span>
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="py-12 text-center rounded-xl border border-white/5 bg-slate-950/40 space-y-3">
+                    <Loader2 className="h-8 w-8 animate-spin text-purple-400 mx-auto" />
+                    <p className="text-sm text-slate-400">
+                      {status || "Decrypting files in browser..."}
+                    </p>
+                  </div>
+                )}
+
+                {status && extractedFiles.length > 0 && (
+                  <p className="text-xs text-purple-300/80 text-center font-mono">
+                    {status}
+                  </p>
+                )}
+              </div>
+
+              {/* Right Column: Security Card & Sharing */}
+              <div className="lg:col-span-5 space-y-6 pt-6 lg:pt-0 lg:pl-6 border-t lg:border-t-0 lg:border-l border-white/10">
+                <div className="space-y-3">
+                  <h1 className="text-3xl font-extrabold text-white">
+                    End-to-End{" "}
+                    <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
+                      Encrypted
+                    </span>
+                  </h1>
+                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                    Decrypted locally in your browser with AES-256-GCM. CloudShare servers never see or log the unencrypted contents.
+                  </p>
+                </div>
+
+                {/* Security Guarantee Box */}
+                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-2.5 text-xs text-slate-300">
+                  <div className="flex items-center gap-2 text-emerald-400 font-semibold">
+                    <ShieldCheck className="h-4 w-4" />
+                    <span>Cryptographic Verification Passed</span>
+                  </div>
+                  <p className="text-slate-400 leading-relaxed">
+                    Once the file reaches its expiry time or download quota, it is instantly deleted from storage.
+                  </p>
+                </div>
+
+                {/* Share Link again */}
+                <div className="space-y-2">
+                  <span className="text-xs font-semibold text-slate-300">
+                    Share Link Again:
+                  </span>
+                  <div className="flex items-center gap-2 p-1.5 pl-3 rounded-xl bg-slate-950/80 border border-white/10">
                     <input
                       type="text"
                       value={downloadLink}
                       readOnly
-                      className="flex-grow bg-transparent border-none focus:outline-none text-gray-300"
+                      className="flex-grow bg-transparent text-xs font-mono text-purple-300 focus:outline-none truncate select-all"
                     />
-                  </div>
-                  <div className="flex space-x-4">
-                    <Button 
-                      onClick={copyLinkToClipboard} 
-                      className="flex-1 bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+                    <Button
+                      onClick={copyLinkToClipboard}
+                      className="bg-purple-600 hover:bg-purple-500 text-white font-medium text-xs px-3 py-1.5 rounded-lg flex items-center justify-center gap-1 transition-colors flex-shrink-0"
                     >
-                      {buttonText}
+                      <Copy className="h-3 w-3" />
+                      <span>{buttonText}</span>
                     </Button>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button className="flex-1 bg-transparent border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white transition-colors duration-300">
-                          Show QR Code
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-md">
-                        <DialogHeader>
-                          <DialogTitle>QR Code for Download Link</DialogTitle>
-                          <DialogDescription>Scan this QR code to access the download link.</DialogDescription>
-                        </DialogHeader>
-                        <div className="flex justify-center py-4">
-                          <QRCode value={downloadLink} size={256} />
-                        </div>
-                      </DialogContent>
-                    </Dialog>
                   </div>
                 </div>
 
-                <Button
-                  variant="outline"
-                  onClick={() => navigate("/upload")}
-                  className="bg-purple-500 hover:bg-purple-600 text-white w-full py-3 text-lg"
-                >
-                  <UploadCloud className="mr-2 h-5 w-5" /> Upload More Files
-                </Button>
+                {/* QR and Upload More actions */}
+                <div className="space-y-2.5 pt-2">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full bg-white/[0.03] border-white/10 hover:bg-white/[0.08] text-white hover:text-white flex items-center justify-center gap-2 py-4 text-xs font-semibold"
+                      >
+                        <QrCode className="h-3.5 w-3.5 text-purple-400" />
+                        <span>Show Mobile QR Code</span>
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md bg-slate-900 border-white/10 text-white">
+                      <DialogHeader>
+                        <DialogTitle className="text-white text-lg font-bold flex items-center gap-2">
+                          <QrCode className="h-5 w-5 text-purple-400" />
+                          <span>QR Code for Download Link</span>
+                        </DialogTitle>
+                        <DialogDescription className="text-slate-400 text-xs">
+                          Scan this QR code on another device to download these files.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex flex-col items-center justify-center py-6 bg-white rounded-xl my-2">
+                        <QRCode value={downloadLink} size={220} quietZone={10} />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <Button
+                    onClick={() => navigate("/upload")}
+                    variant="ghost"
+                    className="w-full text-slate-400 hover:text-white hover:bg-white/5 py-3 text-xs flex items-center justify-center gap-2"
+                  >
+                    <UploadCloud className="h-3.5 w-3.5" />
+                    <span>Upload New Files</span>
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
       </main>
+
+      <Footer />
     </div>
-);
+  );
 };
 
 export default FileDownload;
