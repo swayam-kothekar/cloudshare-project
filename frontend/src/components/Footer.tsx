@@ -1,5 +1,6 @@
-import { ShieldCheck, ArrowUpRight, Lock } from "lucide-react";
+import { ShieldCheck, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { CloudLogo } from "./Icons";
 
 export const Footer = () => {
   return (
@@ -16,7 +17,7 @@ export const Footer = () => {
               className="inline-flex items-center gap-2.5 font-bold text-2xl tracking-tight text-white group"
             >
               <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-pink-500 p-2 flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:scale-105 transition-transform duration-200">
-                <Lock className="h-5 w-5 text-white" />
+                <CloudLogo className="h-5 w-5 text-white" />
               </div>
               <span className="bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
                 CloudShare

@@ -13,7 +13,7 @@ import {
   QrCode,
   RefreshCw,
   AlertCircle,
-  Lock,
+  Link2,
 } from "lucide-react";
 import { useState, useRef } from "react";
 import axios from "axios";
@@ -593,7 +593,7 @@ const FileUpload: React.FC = () => {
                     htmlFor="customShortUrl"
                     className="text-xs font-semibold text-slate-300 flex items-center gap-1.5"
                   >
-                    <Lock className="h-3.5 w-3.5 text-indigo-400" />
+                    <Link2 className="h-3.5 w-3.5 text-indigo-400" />
                     <span>Custom Short URL (Optional):</span>
                   </Label>
                   <div className="relative">

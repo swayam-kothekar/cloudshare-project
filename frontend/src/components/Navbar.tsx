@@ -11,8 +11,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Lock, UploadCloud, ArrowRight } from "lucide-react";
+import { Menu, UploadCloud, ArrowRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { CloudLogo } from "./Icons";
 
 interface RouteProps {
   href: string;
@@ -60,7 +61,7 @@ export const Navbar = () => {
               className="flex items-center gap-2.5 group transition-transform"
             >
               <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-pink-500 p-2 flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:scale-105 transition-transform duration-200">
-                <Lock className="h-5 w-5 text-white" />
+                <CloudLogo className="h-5 w-5 text-white" />
               </div>
               <span className="font-bold text-xl tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
                 CloudShare
@@ -109,7 +110,7 @@ export const Navbar = () => {
                 <SheetHeader className="text-left border-b border-white/10 pb-4">
                   <SheetTitle className="flex items-center gap-2">
                     <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-purple-600 to-pink-500 p-1.5 flex items-center justify-center">
-                      <Lock className="h-4 w-4 text-white" />
+                      <CloudLogo className="h-4 w-4 text-white" />
                     </div>
                     <span className="font-bold text-lg text-white">CloudShare</span>
                   </SheetTitle>
