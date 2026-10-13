@@ -1,8 +1,19 @@
 import { ShieldCheck, ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CloudLogo } from "./Icons";
 
 export const Footer = () => {
+  const location = useLocation();
+
+  const handleSectionClick = (id: string) => {
+    if (location.pathname === "/") {
+      const elem = document.getElementById(id);
+      if (elem) {
+        elem.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <footer id="footer" className="relative border-t border-white/[0.08] bg-zinc-950/90 backdrop-blur-xl">
       <div className="container mx-auto px-6 py-14 max-w-6xl">
@@ -11,6 +22,11 @@ export const Footer = () => {
           <div className="md:col-span-5 space-y-4">
             <Link
               to="/"
+              onClick={() => {
+                if (location.pathname === "/") {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
               className="inline-flex items-center gap-2.5 font-bold text-2xl tracking-tight text-white group"
             >
               <CloudLogo className="h-9 w-9 drop-shadow-[0_4px_16px_rgba(59,130,246,0.35)] group-hover:scale-105 transition-transform" />
@@ -38,6 +54,7 @@ export const Footer = () => {
               <li>
                 <Link
                   to="/upload"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-foreground/80 hover:text-white transition-colors flex items-center gap-1.5 group"
                 >
                   <span>Upload Files</span>
@@ -45,28 +62,31 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a
-                  href="/#howItWorks"
+                <Link
+                  to="/#howItWorks"
+                  onClick={() => handleSectionClick("howItWorks")}
                   className="text-foreground/80 hover:text-white transition-colors"
                 >
                   How It Works
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/#features"
+                <Link
+                  to="/#features"
+                  onClick={() => handleSectionClick("features")}
                   className="text-foreground/80 hover:text-white transition-colors"
                 >
                   Key Features
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/#faq"
+                <Link
+                  to="/#faq"
+                  onClick={() => handleSectionClick("faq")}
                   className="text-foreground/80 hover:text-white transition-colors"
                 >
                   Security & FAQ
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -104,14 +124,6 @@ export const Footer = () => {
           </p>
 
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 text-emerald-400/90 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span>Ephemeral storage active</span>
-            </div>
-
             <a
               href="https://github.com/swayam-kothekar/cloudshare-project"
               target="_blank"

@@ -58,6 +58,11 @@ export const Navbar = () => {
           <NavigationMenuItem className="font-bold flex">
             <Link
               to="/"
+              onClick={() => {
+                if (location.pathname === "/") {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
               className="flex items-center gap-2.5 group transition-transform"
             >
               <CloudLogo className="h-9 w-9 drop-shadow-[0_4px_16px_rgba(59,130,246,0.35)] group-hover:scale-105 transition-transform" />
@@ -70,14 +75,14 @@ export const Navbar = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1">
             {routeList.map((route: RouteProps) => (
-              <a
+              <Link
                 key={route.label}
-                href={route.href}
+                to={route.href}
                 onClick={() => handleNavClick(route.href)}
                 className="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white rounded-lg hover:bg-white/[0.06] transition-colors"
               >
                 {route.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -85,6 +90,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center gap-3">
             <Link
               to="/upload"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 border border-indigo-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_2px_10px_rgba(79,70,229,0.3)] transition-all duration-150 active:scale-[0.99]"
             >
               <UploadCloud className="h-4 w-4" />
@@ -116,19 +122,22 @@ export const Navbar = () => {
 
                 <nav className="flex flex-col gap-2 mt-6">
                   {routeList.map(({ href, label }: RouteProps) => (
-                    <a
+                    <Link
                       key={label}
-                      href={href}
+                      to={href}
                       onClick={() => handleNavClick(href)}
                       className="px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
                     >
                       {label}
-                    </a>
+                    </Link>
                   ))}
                   <div className="pt-4 border-t border-white/10 mt-2">
                     <Link
                       to="/upload"
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        setIsOpen(false);
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
                       className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 border border-indigo-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-150"
                     >
                       <UploadCloud className="h-4 w-4" />

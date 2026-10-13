@@ -52,6 +52,7 @@ export const Hero = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               to="/upload"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 border border-indigo-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_4px_20px_rgba(79,70,229,0.35)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_6px_24px_rgba(79,70,229,0.5)] active:scale-[0.99] transition-all duration-150"
             >
               <UploadCloud className="h-5 w-5" />
@@ -61,6 +62,11 @@ export const Hero = () => {
 
             <a
               href="#howItWorks"
+              onClick={(e) => {
+                e.preventDefault();
+                const elem = document.getElementById("howItWorks");
+                if (elem) elem.scrollIntoView({ behavior: "smooth" });
+              }}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-zinc-200 hover:text-white bg-zinc-900/80 hover:bg-zinc-800/90 border border-zinc-700/80 hover:border-zinc-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] active:scale-[0.99] transition-all duration-150"
             >
               <span>See How It Works</span>

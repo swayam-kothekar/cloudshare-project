@@ -392,90 +392,96 @@ const FileDownload: React.FC = () => {
               </div>
 
               {/* Right Column: Security Card & Sharing */}
-              <div className="lg:col-span-5 space-y-6 pt-6 lg:pt-0 lg:pl-6 border-t lg:border-t-0 lg:border-l border-white/10">
-                <div className="space-y-3">
-                  <h1 className="text-3xl font-extrabold text-white">
-                    End-to-End{" "}
-                    <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
-                      Encrypted
+              <div className="lg:col-span-5 flex flex-col space-y-6 pt-6 lg:pt-0 lg:pl-6 border-t lg:border-t-0 lg:border-l border-white/10">
+                {/* Share Actions (shifted to top on mobile) */}
+                <div className="space-y-6 order-1 lg:order-2">
+                  {/* Share Link again */}
+                  <div className="space-y-2">
+                    <span className="text-xs font-semibold text-zinc-300">
+                      Share Link Again:
                     </span>
-                  </h1>
-                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                    Decrypted locally in your browser with AES-256-GCM. CloudShare servers never see or log the unencrypted contents.
-                  </p>
-                </div>
-
-                {/* Security Guarantee Box */}
-                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-2.5 text-xs text-zinc-300">
-                  <div className={`flex items-center gap-2 font-semibold ${error ? "text-amber-400" : "text-emerald-400"}`}>
-                    <ShieldCheck className="h-4 w-4" />
-                    <span>{error ? "Burn-After-Reading Verified" : "Cryptographic Verification Passed"}</span>
+                    <div className="flex items-center gap-2 p-1.5 pl-3 rounded-xl bg-zinc-900/90 border border-white/10">
+                      <input
+                        type="text"
+                        value={downloadLink}
+                        readOnly
+                        className="flex-grow bg-transparent text-xs font-mono text-indigo-300 focus:outline-none truncate select-all"
+                      />
+                      <Button
+                        onClick={copyLinkToClipboard}
+                        className="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg border border-indigo-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] flex items-center justify-center gap-1 transition-colors flex-shrink-0"
+                      >
+                        <Copy className="h-3 w-3" />
+                        <span>{buttonText}</span>
+                      </Button>
+                    </div>
                   </div>
-                  <p className="text-zinc-400 leading-relaxed">
-                    {error
-                      ? "This file's download quota or expiration timer was exhausted, so the encrypted data was deleted from storage."
-                      : "Once the file reaches its expiry time or download quota, it is instantly deleted from storage."}
-                  </p>
-                </div>
 
-                {/* Share Link again */}
-                <div className="space-y-2">
-                  <span className="text-xs font-semibold text-zinc-300">
-                    Share Link Again:
-                  </span>
-                  <div className="flex items-center gap-2 p-1.5 pl-3 rounded-xl bg-zinc-900/90 border border-white/10">
-                    <input
-                      type="text"
-                      value={downloadLink}
-                      readOnly
-                      className="flex-grow bg-transparent text-xs font-mono text-indigo-300 focus:outline-none truncate select-all"
-                    />
+                  {/* QR and Upload More actions */}
+                  <div className="space-y-2.5 pt-1">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="w-full bg-zinc-900/80 hover:bg-zinc-800 text-zinc-200 hover:text-white border border-white/10 flex items-center justify-center gap-2 py-3.5 text-xs font-semibold rounded-xl transition-colors shadow-sm"
+                        >
+                          <QrCode className="h-3.5 w-3.5 text-indigo-400" />
+                          <span>Show Mobile QR Code</span>
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md bg-zinc-950 border-white/10 text-white">
+                        <DialogHeader>
+                          <DialogTitle className="text-white text-lg font-bold flex items-center gap-2">
+                            <QrCode className="h-5 w-5 text-indigo-400" />
+                            <span>QR Code for Download Link</span>
+                          </DialogTitle>
+                          <DialogDescription className="text-zinc-400 text-xs">
+                            Scan this QR code on another device to download these files.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="flex flex-col items-center justify-center py-6 bg-white rounded-xl my-2">
+                          <QRCode value={downloadLink} size={220} quietZone={10} />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+
                     <Button
-                      onClick={copyLinkToClipboard}
-                      className="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg border border-indigo-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] flex items-center justify-center gap-1 transition-colors flex-shrink-0"
+                      onClick={() => navigate("/upload")}
+                      variant="ghost"
+                      className="w-full text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60 py-3 text-xs flex items-center justify-center gap-2 rounded-xl transition-colors"
                     >
-                      <Copy className="h-3 w-3" />
-                      <span>{buttonText}</span>
+                      <UploadCloud className="h-3.5 w-3.5" />
+                      <span>Upload New Files</span>
                     </Button>
                   </div>
                 </div>
 
-                {/* QR and Upload More actions */}
-                <div className="space-y-2.5 pt-2">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="w-full bg-zinc-900/80 hover:bg-zinc-800 text-zinc-200 hover:text-white border border-white/10 flex items-center justify-center gap-2 py-3.5 text-xs font-semibold rounded-xl transition-colors shadow-sm"
-                      >
-                        <QrCode className="h-3.5 w-3.5 text-indigo-400" />
-                        <span>Show Mobile QR Code</span>
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-md bg-zinc-950 border-white/10 text-white">
-                      <DialogHeader>
-                        <DialogTitle className="text-white text-lg font-bold flex items-center gap-2">
-                          <QrCode className="h-5 w-5 text-indigo-400" />
-                          <span>QR Code for Download Link</span>
-                        </DialogTitle>
-                        <DialogDescription className="text-zinc-400 text-xs">
-                          Scan this QR code on another device to download these files.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="flex flex-col items-center justify-center py-6 bg-white rounded-xl my-2">
-                        <QRCode value={downloadLink} size={220} quietZone={10} />
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                {/* Security Info & Guarantee Box (shifted below on mobile) */}
+                <div className="space-y-6 order-2 lg:order-1">
+                  <div className="space-y-3">
+                    <h1 className="text-3xl font-extrabold text-white">
+                      End-to-End{" "}
+                      <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
+                        Encrypted
+                      </span>
+                    </h1>
+                    <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                      Decrypted locally in your browser with AES-256-GCM. CloudShare servers never see or log the unencrypted contents.
+                    </p>
+                  </div>
 
-                  <Button
-                    onClick={() => navigate("/upload")}
-                    variant="ghost"
-                    className="w-full text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60 py-3 text-xs flex items-center justify-center gap-2 rounded-xl transition-colors"
-                  >
-                    <UploadCloud className="h-3.5 w-3.5" />
-                    <span>Upload New Files</span>
-                  </Button>
+                  {/* Security Guarantee Box */}
+                  <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-2.5 text-xs text-zinc-300">
+                    <div className={`flex items-center gap-2 font-semibold ${error ? "text-amber-400" : "text-emerald-400"}`}>
+                      <ShieldCheck className="h-4 w-4" />
+                      <span>{error ? "Burn-After-Reading Verified" : "Cryptographic Verification Passed"}</span>
+                    </div>
+                    <p className="text-zinc-400 leading-relaxed">
+                      {error
+                        ? "This file's download quota or expiration timer was exhausted, so the encrypted data was deleted from storage."
+                        : "Once the file reaches its expiry time or download quota, it is instantly deleted from storage."}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

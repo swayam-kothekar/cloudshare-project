@@ -15,7 +15,7 @@ import {
   AlertCircle,
   Link2,
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import JSZip from "jszip";
 import { Card, CardContent } from "./components/ui/card";
@@ -54,6 +54,10 @@ const FileUpload: React.FC = () => {
   const [totalFileSize, setTotalFileSize] = useState<number>(0);
   const [fileSizeError, setFileSizeError] = useState<string>("");
   const [shortUrlError, setShortUrlError] = useState<string>("");
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
