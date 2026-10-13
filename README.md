@@ -9,7 +9,7 @@
   An open-source, privacy-first platform that lets you encrypt files in your browser with AES-256-GCM, generate self-destructing links and QR codes, and share confidential bundles with zero footprint.
 
   <p align="center">
-    <a href="https://cloudshare.swayamk.tech"><strong>Explore Live Demo »</strong></a>
+    <a href="https://cloudshare.swayamk.tech"><strong>Live Demo »</strong> cloudshare.swayamk.tech</a>
     <br />
     <br />
     <a href="#key-features">Key Features</a>
