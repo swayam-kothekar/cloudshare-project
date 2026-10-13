@@ -12,6 +12,7 @@ import {
   Lock,
   QrCode,
   Loader2,
+  AlertCircle,
 } from "lucide-react";
 import { Card, CardContent } from "./components/ui/card";
 import { QRCode } from "react-qrcode-logo";
@@ -38,6 +39,8 @@ interface DecryptedFile {
 
 const FileDownload: React.FC = () => {
   const [status, setStatus] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [extractedFiles, setExtractedFiles] = useState<ExtractedFile[]>([]);
   const [downloadLink, setDownloadLink] = useState<string>("");
   const [buttonText, setButtonText] = useState("Copy Link");
@@ -113,11 +116,11 @@ const FileDownload: React.FC = () => {
       setExtractedFiles(files);
     } catch (err) {
       console.error("Failed to extract ZIP file:", err);
-      setStatus(
-        `Failed to extract ZIP file: ${
-          err instanceof Error ? err.message : String(err)
-        }`
-      );
+      const msg = `Failed to extract ZIP file: ${
+        err instanceof Error ? err.message : String(err)
+      }`;
+      setStatus(msg);
+      setError(msg);
     }
   };
 
@@ -125,28 +128,27 @@ const FileDownload: React.FC = () => {
     const params = new URLSearchParams(window.location.search);
     const finalUrl = params.get("url");
     const key = params.get("key");
-    // const shortUrl = params.get("shortUrl");
-    // setDownloadLink(`https://cloudshare.swayam.tech/share/${shortUrl}`);
 
     if (!finalUrl) {
-      setStatus("No download URL provided");
+      setError("No download URL provided");
+      setIsLoading(false);
       return;
     }
 
     try {
+      setIsLoading(true);
+      setError(null);
+      setStatus("Loading Files...");
+
       const url = new URL(finalUrl);
-// console.log(url)
-//       const downloadUrl =
-//         url.origin + url.pathname + url.search.split("&encryptionKey=")[0];
-      console.log("GetObject Link:" + url);
       const encodedKey = key;
-      console.log(url.pathname.slice(1))
-      const keyName = url.pathname.slice(1).toString()
-      // console.log(downloadUrl)
+      const keyName = url.pathname.slice(1).toString();
+
       if (!encodedKey) {
         throw new Error("Encryption key not found in URL");
       }
-      setStatus("Loading Files...");
+
+      setStatus("Checking download quota...");
       const { data: downloadLimitData } = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/get-download-limit`,
         {
@@ -154,8 +156,8 @@ const FileDownload: React.FC = () => {
         }
       );
 
-      // console.log(downloadLimitData);
-      if(downloadLimitData.downloadLimit > 0){
+      if (downloadLimitData.downloadLimit > 0) {
+        setStatus("Downloading encrypted bundle...");
         const response = await axios.get<Blob>(url.toString(), {
           responseType: "blob",
         });
@@ -171,7 +173,7 @@ const FileDownload: React.FC = () => {
         await extractZip(decryptedBlob);
 
         setStatus("Files extracted successfully!");
-        
+
         // Try to decrement download limit, but don't fail the entire process if this fails
         try {
           await axios.post(
@@ -181,36 +183,32 @@ const FileDownload: React.FC = () => {
           );
         } catch (decrementError) {
           console.warn("Failed to decrement download limit:", decrementError);
-          // Don't throw this error - the file download was successful
         }
       } else {
-        setStatus("Oops! Download Link Expired or File Deleted")
+        setError("Oops! Download Link Expired or File Deleted");
       }
-
-      
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        if (err.response?.status === 403) {
-          console.error("File access forbidden:", err.message);
-          setStatus("Oops! Download Link Expired or File Deleted");
-        } else if (err.response?.status === 404) {
-          console.error("File not found:", err.message);
-          setStatus("Oops! File not found or link has expired");
+        if (err.response?.status === 403 || err.response?.status === 404) {
+          console.error("File not found or expired:", err.message);
+          setError("Oops! Download Link Expired or File Deleted");
         } else if (err.config?.url?.includes('get-download-limit')) {
           console.error("Failed to check download limit:", err.message);
-          setStatus("Failed to verify download permissions. Please try again.");
+          setError("Oops! Download Link Expired or File Deleted");
         } else {
           console.error("Network error during file download:", err.message);
-          setStatus(`Network error: ${err.message}`);
+          setError(`Network error: ${err.message}`);
         }
       } else {
         console.error("File processing failed:", err);
-        setStatus(
+        setError(
           `File processing failed: ${
             err instanceof Error ? err.message : String(err)
           }`
         );
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -284,20 +282,71 @@ const FileDownload: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
               {/* Left Column: Files Download List */}
               <div className="lg:col-span-7 space-y-6">
-                <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300 mb-3">
-                    <Lock className="h-3.5 w-3.5 text-indigo-400" />
-                    <span>DECRYPTED IN BROWSER</span>
+                {error ? (
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-xs font-semibold text-rose-300 mb-3">
+                      <AlertCircle className="h-3.5 w-3.5 text-rose-400" />
+                      <span>LINK UNAVAILABLE</span>
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                      Link Expired or Purged
+                    </h2>
+                    <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+                      This file bundle is no longer accessible on the server.
+                    </p>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                    Your Files Are Ready
-                  </h2>
-                  <p className="text-xs sm:text-sm text-zinc-400 mt-1">
-                    Click any file to download individually or grab the entire bundle below.
-                  </p>
-                </div>
+                ) : extractedFiles.length > 0 ? (
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300 mb-3">
+                      <Lock className="h-3.5 w-3.5 text-indigo-400" />
+                      <span>DECRYPTED IN BROWSER</span>
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                      Your Files Are Ready
+                    </h2>
+                    <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+                      Click any file to download individually or grab the entire bundle below.
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300 mb-3">
+                      <Loader2 className="h-3.5 w-3.5 text-indigo-400 animate-spin" />
+                      <span>DECRYPTING IN BROWSER</span>
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                      Preparing Your Files
+                    </h2>
+                    <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+                      Decrypting client-side using AES-256-GCM...
+                    </p>
+                  </div>
+                )}
 
-                {extractedFiles.length > 0 ? (
+                {error ? (
+                  <div className="py-12 px-6 text-center rounded-xl border border-rose-500/20 bg-rose-500/[0.04] space-y-4">
+                    <div className="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mx-auto text-rose-400">
+                      <AlertCircle className="h-6 w-6" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <h3 className="text-base font-semibold text-white">
+                        {error}
+                      </h3>
+                      <p className="text-xs text-zinc-400 max-w-sm mx-auto leading-relaxed">
+                        CloudShare files automatically self-destruct once their download quota is exhausted or their timer expires.
+                      </p>
+                    </div>
+                    <div className="pt-2">
+                      <Button
+                        onClick={() => navigate("/upload")}
+                        className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 transition-colors inline-flex items-center gap-2"
+                      >
+                        <UploadCloud className="h-4 w-4" />
+                        <span>Upload New Files</span>
+                      </Button>
+                    </div>
+                  </div>
+                ) : extractedFiles.length > 0 ? (
                   <div className="space-y-4">
                     <ul className="space-y-2.5 max-h-80 overflow-y-auto pr-1 custom-scrollbar">
                       {extractedFiles.map((file, index) => (
@@ -326,16 +375,16 @@ const FileDownload: React.FC = () => {
                       <span>Download All Files ({extractedFiles.length})</span>
                     </Button>
                   </div>
-                ) : (
+                ) : isLoading ? (
                   <div className="py-12 text-center rounded-xl border border-white/5 bg-zinc-900/40 space-y-3">
                     <Loader2 className="h-8 w-8 animate-spin text-indigo-400 mx-auto" />
                     <p className="text-sm text-zinc-400">
                       {status || "Decrypting files in browser..."}
                     </p>
                   </div>
-                )}
+                ) : null}
 
-                {status && extractedFiles.length > 0 && (
+                {status && !error && extractedFiles.length > 0 && (
                   <p className="text-xs text-indigo-300/80 text-center font-mono">
                     {status}
                   </p>
@@ -358,12 +407,14 @@ const FileDownload: React.FC = () => {
 
                 {/* Security Guarantee Box */}
                 <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-2.5 text-xs text-zinc-300">
-                  <div className="flex items-center gap-2 text-emerald-400 font-semibold">
+                  <div className={`flex items-center gap-2 font-semibold ${error ? "text-amber-400" : "text-emerald-400"}`}>
                     <ShieldCheck className="h-4 w-4" />
-                    <span>Cryptographic Verification Passed</span>
+                    <span>{error ? "Burn-After-Reading Verified" : "Cryptographic Verification Passed"}</span>
                   </div>
                   <p className="text-zinc-400 leading-relaxed">
-                    Once the file reaches its expiry time or download quota, it is instantly deleted from storage.
+                    {error
+                      ? "This file's download quota or expiration timer was exhausted, so the encrypted data was deleted from storage."
+                      : "Once the file reaches its expiry time or download quota, it is instantly deleted from storage."}
                   </p>
                 </div>
 
