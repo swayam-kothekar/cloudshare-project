@@ -118,7 +118,7 @@ export const Footer = () => {
             </div>
 
             <a
-              href="https://github.com"
+              href="https://github.com/swayam-kothekar/cloudshare-project"
               target="_blank"
               rel="noreferrer noopener"
               className="hover:text-white transition-colors flex items-center gap-1.5"
