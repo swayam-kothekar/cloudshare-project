@@ -267,29 +267,32 @@ const FileDownload: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
-      {/* Background ambient glows */}
+      {/* Background ambient lighting with grid texture */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-purple-600/15 via-fuchsia-600/5 to-transparent blur-[140px]" />
-        <div className="absolute top-[60%] -right-32 w-[500px] h-[500px] bg-pink-600/5 blur-[120px] rounded-full" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-70" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-indigo-600/15 blur-[140px] rounded-full" />
+        <div className="absolute top-[50%] -left-36 w-[500px] h-[500px] bg-emerald-500/[0.04] blur-[150px] rounded-full" />
+        <div className="absolute top-[60%] -right-36 w-[500px] h-[500px] bg-cyan-500/[0.04] blur-[150px] rounded-full" />
       </div>
 
       <Navbar />
 
       <main className="flex-grow flex items-center justify-center px-4 py-12 md:py-16 relative z-10 max-w-5xl mx-auto w-full">
-        <Card className="w-full rounded-2xl border border-white/10 bg-slate-900/70 backdrop-blur-2xl shadow-2xl overflow-hidden">
+        <Card className="w-full rounded-2xl border border-white/10 bg-zinc-950/80 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_-20px_rgba(99,102,241,0.15)] overflow-hidden relative">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
           <CardContent className="p-6 sm:p-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
               {/* Left Column: Files Download List */}
               <div className="lg:col-span-7 space-y-6">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs font-semibold text-purple-300 mb-3">
-                    <Lock className="h-3.5 w-3.5" />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300 mb-3">
+                    <Lock className="h-3.5 w-3.5 text-indigo-400" />
                     <span>DECRYPTED IN BROWSER</span>
                   </div>
                   <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                     Your Files Are Ready
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                  <p className="text-xs sm:text-sm text-zinc-400 mt-1">
                     Click any file to download individually or grab the entire bundle below.
                   </p>
                 </div>
@@ -300,14 +303,14 @@ const FileDownload: React.FC = () => {
                       {extractedFiles.map((file, index) => (
                         <li
                           key={index}
-                          className="flex justify-between items-center bg-slate-950/70 border border-white/10 p-3.5 rounded-xl hover:border-purple-500/40 hover:bg-white/[0.04] transition-all duration-200 cursor-pointer group"
+                          className="flex justify-between items-center bg-zinc-900/60 border border-white/10 p-3.5 rounded-xl hover:border-indigo-500/40 hover:bg-zinc-900 transition-all duration-200 cursor-pointer group"
                           onClick={() => downloadFile(file)}
                         >
-                          <span className="flex items-center truncate mr-3 text-slate-300 group-hover:text-white transition-colors text-sm font-medium">
-                            <FileText className="mr-2.5 h-4 w-4 text-purple-400 flex-shrink-0" />
+                          <span className="flex items-center truncate mr-3 text-zinc-300 group-hover:text-white transition-colors text-sm font-medium">
+                            <FileText className="mr-2.5 h-4 w-4 text-indigo-400 flex-shrink-0" />
                             <span className="truncate">{file.name}</span>
                           </span>
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold text-white bg-purple-600/80 group-hover:bg-purple-500 flex-shrink-0 transition-colors">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 border border-indigo-400/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] flex-shrink-0 transition-colors">
                             <Download className="h-3.5 w-3.5" />
                             <span>Download</span>
                           </span>
@@ -317,23 +320,23 @@ const FileDownload: React.FC = () => {
 
                     <Button
                       onClick={downloadAllFiles}
-                      className="w-full py-3.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 shadow-xl shadow-purple-500/25 flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.01]"
+                      className="w-full py-3.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 border border-indigo-400/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_4px_16px_rgba(79,70,229,0.35)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_6px_24px_rgba(79,70,229,0.45)] flex items-center justify-center gap-2 transition-all duration-150 active:scale-[0.99]"
                     >
                       <Download className="h-4 w-4" />
                       <span>Download All Files ({extractedFiles.length})</span>
                     </Button>
                   </div>
                 ) : (
-                  <div className="py-12 text-center rounded-xl border border-white/5 bg-slate-950/40 space-y-3">
-                    <Loader2 className="h-8 w-8 animate-spin text-purple-400 mx-auto" />
-                    <p className="text-sm text-slate-400">
+                  <div className="py-12 text-center rounded-xl border border-white/5 bg-zinc-900/40 space-y-3">
+                    <Loader2 className="h-8 w-8 animate-spin text-indigo-400 mx-auto" />
+                    <p className="text-sm text-zinc-400">
                       {status || "Decrypting files in browser..."}
                     </p>
                   </div>
                 )}
 
                 {status && extractedFiles.length > 0 && (
-                  <p className="text-xs text-purple-300/80 text-center font-mono">
+                  <p className="text-xs text-indigo-300/80 text-center font-mono">
                     {status}
                   </p>
                 )}
@@ -344,41 +347,41 @@ const FileDownload: React.FC = () => {
                 <div className="space-y-3">
                   <h1 className="text-3xl font-extrabold text-white">
                     End-to-End{" "}
-                    <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
                       Encrypted
                     </span>
                   </h1>
-                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                     Decrypted locally in your browser with AES-256-GCM. CloudShare servers never see or log the unencrypted contents.
                   </p>
                 </div>
 
                 {/* Security Guarantee Box */}
-                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-2.5 text-xs text-slate-300">
+                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-2.5 text-xs text-zinc-300">
                   <div className="flex items-center gap-2 text-emerald-400 font-semibold">
                     <ShieldCheck className="h-4 w-4" />
                     <span>Cryptographic Verification Passed</span>
                   </div>
-                  <p className="text-slate-400 leading-relaxed">
+                  <p className="text-zinc-400 leading-relaxed">
                     Once the file reaches its expiry time or download quota, it is instantly deleted from storage.
                   </p>
                 </div>
 
                 {/* Share Link again */}
                 <div className="space-y-2">
-                  <span className="text-xs font-semibold text-slate-300">
+                  <span className="text-xs font-semibold text-zinc-300">
                     Share Link Again:
                   </span>
-                  <div className="flex items-center gap-2 p-1.5 pl-3 rounded-xl bg-slate-950/80 border border-white/10">
+                  <div className="flex items-center gap-2 p-1.5 pl-3 rounded-xl bg-zinc-900/90 border border-white/10">
                     <input
                       type="text"
                       value={downloadLink}
                       readOnly
-                      className="flex-grow bg-transparent text-xs font-mono text-purple-300 focus:outline-none truncate select-all"
+                      className="flex-grow bg-transparent text-xs font-mono text-indigo-300 focus:outline-none truncate select-all"
                     />
                     <Button
                       onClick={copyLinkToClipboard}
-                      className="bg-purple-600 hover:bg-purple-500 text-white font-medium text-xs px-3 py-1.5 rounded-lg flex items-center justify-center gap-1 transition-colors flex-shrink-0"
+                      className="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg border border-indigo-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] flex items-center justify-center gap-1 transition-colors flex-shrink-0"
                     >
                       <Copy className="h-3 w-3" />
                       <span>{buttonText}</span>
@@ -392,19 +395,19 @@ const FileDownload: React.FC = () => {
                     <DialogTrigger asChild>
                       <Button
                         variant="outline"
-                        className="w-full bg-white/[0.03] border-white/10 hover:bg-white/[0.08] text-white hover:text-white flex items-center justify-center gap-2 py-4 text-xs font-semibold"
+                        className="w-full bg-zinc-900/80 hover:bg-zinc-800 text-zinc-200 hover:text-white border border-white/10 flex items-center justify-center gap-2 py-3.5 text-xs font-semibold rounded-xl transition-colors shadow-sm"
                       >
-                        <QrCode className="h-3.5 w-3.5 text-purple-400" />
+                        <QrCode className="h-3.5 w-3.5 text-indigo-400" />
                         <span>Show Mobile QR Code</span>
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-md bg-slate-900 border-white/10 text-white">
+                    <DialogContent className="sm:max-w-md bg-zinc-950 border-white/10 text-white">
                       <DialogHeader>
                         <DialogTitle className="text-white text-lg font-bold flex items-center gap-2">
-                          <QrCode className="h-5 w-5 text-purple-400" />
+                          <QrCode className="h-5 w-5 text-indigo-400" />
                           <span>QR Code for Download Link</span>
                         </DialogTitle>
-                        <DialogDescription className="text-slate-400 text-xs">
+                        <DialogDescription className="text-zinc-400 text-xs">
                           Scan this QR code on another device to download these files.
                         </DialogDescription>
                       </DialogHeader>
@@ -417,7 +420,7 @@ const FileDownload: React.FC = () => {
                   <Button
                     onClick={() => navigate("/upload")}
                     variant="ghost"
-                    className="w-full text-slate-400 hover:text-white hover:bg-white/5 py-3 text-xs flex items-center justify-center gap-2"
+                    className="w-full text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60 py-3 text-xs flex items-center justify-center gap-2 rounded-xl transition-colors"
                   >
                     <UploadCloud className="h-3.5 w-3.5" />
                     <span>Upload New Files</span>

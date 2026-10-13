@@ -58,23 +58,23 @@ export const FAQ = () => {
       <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
         {/* Section Header */}
         <div className="text-center space-y-4 mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs font-semibold text-purple-300">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300">
             <HelpCircle className="h-3.5 w-3.5" />
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
             Security &{" "}
-            <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
               Privacy FAQ
             </span>
           </h2>
-          <p className="text-slate-400 text-base sm:text-lg max-w-xl mx-auto">
+          <p className="text-zinc-400 text-base sm:text-lg max-w-xl mx-auto">
             Got questions about how CloudShare handles your data? Here is everything you need to know about our cryptographic model.
           </p>
         </div>
 
         {/* Accordion container */}
-        <div className="rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-4 sm:p-6 shadow-xl">
+        <div className="rounded-2xl border border-white/10 bg-zinc-950/70 backdrop-blur-xl p-4 sm:p-6 shadow-2xl">
           <Accordion type="single" collapsible className="w-full space-y-3">
             {FAQList.map(({ question, answer, value }: FAQProps) => (
               <AccordionItem
@@ -82,10 +82,10 @@ export const FAQ = () => {
                 value={value}
                 className="border border-white/5 rounded-xl px-4 bg-white/[0.02] hover:bg-white/[0.04] transition-colors overflow-hidden"
               >
-                <AccordionTrigger className="text-left text-base sm:text-lg font-medium text-white hover:text-purple-300 transition-colors py-4">
+                <AccordionTrigger className="text-left text-base sm:text-lg font-medium text-white hover:text-indigo-300 transition-colors py-4">
                   {question}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm text-slate-300 leading-relaxed pb-4 pt-1">
+                <AccordionContent className="text-sm text-zinc-300 leading-relaxed pb-4 pt-1">
                   {answer}
                 </AccordionContent>
               </AccordionItem>
@@ -94,16 +94,17 @@ export const FAQ = () => {
         </div>
 
         {/* CTA banner below FAQ */}
-        <div className="mt-12 text-center p-8 rounded-2xl bg-gradient-to-r from-purple-900/30 via-slate-900/40 to-pink-900/30 border border-white/10 backdrop-blur-md">
-          <h3 className="text-lg font-semibold text-white mb-2">
+        <div className="mt-12 text-center p-8 sm:p-10 rounded-2xl bg-zinc-950/80 border border-white/10 backdrop-blur-md relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+          <h3 className="text-xl font-bold text-white mb-2">
             Ready to transfer files with zero footprint?
           </h3>
-          <p className="text-sm text-slate-400 mb-5 max-w-md mx-auto">
+          <p className="text-sm text-zinc-400 mb-6 max-w-md mx-auto">
             Experience military-grade encryption without the hassle of accounts or complicated software.
           </p>
           <Link
             to="/upload"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 shadow-lg shadow-purple-500/25 transition-all duration-200"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 border border-indigo-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_16px_rgba(79,70,229,0.35)] transition-all duration-150 active:scale-[0.99]"
           >
             <span>Start Uploading Now</span>
             <ArrowRight className="h-4 w-4" />

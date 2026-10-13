@@ -271,10 +271,12 @@ const FileUpload: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
-      {/* Background ambient glows */}
+      {/* Background ambient lighting with grid texture */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-purple-600/15 via-fuchsia-600/5 to-transparent blur-[140px]" />
-        <div className="absolute top-[60%] -left-32 w-[500px] h-[500px] bg-indigo-600/5 blur-[120px] rounded-full" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-70" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-indigo-600/15 blur-[140px] rounded-full" />
+        <div className="absolute top-[50%] -left-36 w-[500px] h-[500px] bg-emerald-500/[0.04] blur-[150px] rounded-full" />
+        <div className="absolute top-[60%] -right-36 w-[500px] h-[500px] bg-cyan-500/[0.04] blur-[150px] rounded-full" />
       </div>
 
       <Navbar />
@@ -282,8 +284,8 @@ const FileUpload: React.FC = () => {
       <main className="flex-grow flex flex-col items-center justify-center px-4 py-12 md:py-16 relative z-10 max-w-4xl mx-auto w-full">
         {/* Header Title */}
         <div className="text-center space-y-3 mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs font-semibold text-purple-300">
-            <ShieldCheck className="h-3.5 w-3.5 text-purple-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300">
+            <ShieldCheck className="h-3.5 w-3.5 text-indigo-400" />
             <span>CLIENT-SIDE ENCRYPTED UPLOAD</span>
           </div>
 
@@ -291,21 +293,21 @@ const FileUpload: React.FC = () => {
             {downloadLink ? (
               <>
                 Files Ready to{" "}
-                <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
                   Share Securely
                 </span>
               </>
             ) : (
               <>
                 Upload &{" "}
-                <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
                   Encrypt Privately
                 </span>
               </>
             )}
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-zinc-400 max-w-xl mx-auto">
             {downloadLink
               ? "Your files have been encrypted in your browser and uploaded. Only individuals with this unique link can decrypt them."
               : "Select up to 50MB of files. AES-256 keys are generated in your browser and never sent to our servers."}
@@ -313,14 +315,15 @@ const FileUpload: React.FC = () => {
         </div>
 
         {/* Card Container */}
-        <Card className="w-full rounded-2xl border border-white/10 bg-slate-900/70 backdrop-blur-2xl shadow-2xl overflow-hidden">
+        <Card className="w-full rounded-2xl border border-white/10 bg-zinc-950/80 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_-20px_rgba(99,102,241,0.15)] overflow-hidden relative">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
           <CardContent className="p-6 sm:p-8">
             {downloadLink ? (
               /* Success / Result State */
               <div className="space-y-6">
                 {/* Success badge */}
                 <div className="flex items-center justify-center">
-                  <div className="h-16 w-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shadow-lg shadow-emerald-500/10">
+                  <div className="h-16 w-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
                     <Check className="h-8 w-8" />
                   </div>
                 </div>
@@ -329,22 +332,22 @@ const FileUpload: React.FC = () => {
                   <h3 className="text-xl font-bold text-white">
                     Encrypted Link Generated
                   </h3>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-zinc-400">
                     The cryptographic key is attached to the link fragment. Keep it safe!
                   </p>
                 </div>
 
                 {/* Link Box */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-2 rounded-xl bg-slate-950/80 border border-white/10">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-2 rounded-xl bg-zinc-900/90 border border-white/10">
                   <input
                     type="text"
                     value={downloadLink}
                     readOnly
-                    className="flex-grow bg-transparent px-3 py-2 text-sm font-mono text-purple-300 focus:outline-none select-all"
+                    className="flex-grow bg-transparent px-3 py-2 text-sm font-mono text-indigo-300 focus:outline-none select-all"
                   />
                   <Button
                     onClick={copyLinkToClipboard}
-                    className="bg-purple-600 hover:bg-purple-500 text-white font-medium text-xs px-4 py-2 rounded-lg flex items-center justify-center gap-1.5 transition-colors flex-shrink-0"
+                    className="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-xs px-4 py-2 rounded-lg border border-indigo-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] flex items-center justify-center gap-1.5 transition-all flex-shrink-0"
                   >
                     {copied ? (
                       <>
@@ -366,16 +369,16 @@ const FileUpload: React.FC = () => {
                     <DialogTrigger asChild>
                       <Button
                         variant="outline"
-                        className="w-full bg-white/[0.04] border-white/10 hover:bg-white/[0.08] text-white hover:text-white flex items-center justify-center gap-2 py-5"
+                        className="w-full bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 hover:border-slate-600 flex items-center justify-center gap-2 py-3.5 text-xs font-semibold rounded-xl transition-colors shadow-sm"
                       >
-                        <QrCode className="h-4 w-4 text-purple-400" />
+                        <QrCode className="h-4 w-4 text-violet-400" />
                         <span>Show QR Code</span>
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-md bg-slate-900 border-white/10 text-white">
                       <DialogHeader>
                         <DialogTitle className="text-white text-lg font-bold flex items-center gap-2">
-                          <QrCode className="h-5 w-5 text-purple-400" />
+                          <QrCode className="h-5 w-5 text-violet-400" />
                           <span>Mobile Download QR Code</span>
                         </DialogTitle>
                         <DialogDescription className="text-slate-400 text-xs">
@@ -400,9 +403,9 @@ const FileUpload: React.FC = () => {
                     href={downloadLink}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-white bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] transition-colors"
+                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-xs font-semibold text-slate-200 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 transition-colors shadow-sm"
                   >
-                    <ExternalLink className="h-4 w-4 text-pink-400" />
+                    <ExternalLink className="h-4 w-4 text-violet-400" />
                     <span>Open Download Page</span>
                   </a>
                 </div>
@@ -414,11 +417,11 @@ const FileUpload: React.FC = () => {
                     <span>AES-256 encrypted</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-purple-400 flex-shrink-0" />
+                    <Clock className="h-4 w-4 text-violet-400 flex-shrink-0" />
                     <span>Auto-expires on timer</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Flame className="h-4 w-4 text-pink-400 flex-shrink-0" />
+                    <Flame className="h-4 w-4 text-amber-400 flex-shrink-0" />
                     <span>Burn on download limit</span>
                   </div>
                 </div>
@@ -428,7 +431,7 @@ const FileUpload: React.FC = () => {
                   <Button
                     onClick={resetUpload}
                     variant="ghost"
-                    className="w-full text-slate-400 hover:text-white hover:bg-white/5 text-xs flex items-center justify-center gap-2 py-4"
+                    className="w-full text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 text-xs flex items-center justify-center gap-2 py-3 rounded-xl transition-colors"
                   >
                     <RefreshCw className="h-3.5 w-3.5" />
                     <span>Upload Another Bundle</span>
@@ -623,7 +626,7 @@ const FileUpload: React.FC = () => {
                       isUploading ||
                       totalFileSize > 50
                     }
-                    className="w-full h-12 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 shadow-xl shadow-purple-500/25 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-[1.01] active:scale-[0.99]"
+                    className="w-full h-12 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 border border-indigo-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_4px_20px_rgba(79,70,229,0.35)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_6px_24px_rgba(79,70,229,0.5)] transition-all duration-150 disabled:opacity-40 disabled:hover:bg-indigo-600 disabled:cursor-not-allowed active:scale-[0.99]"
                   >
                     {isUploading ? (
                       <div className="flex items-center gap-2">

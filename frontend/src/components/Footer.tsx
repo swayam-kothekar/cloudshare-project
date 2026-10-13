@@ -4,10 +4,7 @@ import { CloudLogo } from "./Icons";
 
 export const Footer = () => {
   return (
-    <footer id="footer" className="relative border-t border-white/10 bg-background/80 backdrop-blur-xl">
-      {/* Subtle top ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
-
+    <footer id="footer" className="relative border-t border-white/[0.08] bg-zinc-950/90 backdrop-blur-xl">
       <div className="container mx-auto px-6 py-14 max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12">
           {/* Brand section */}
@@ -16,20 +13,18 @@ export const Footer = () => {
               to="/"
               className="inline-flex items-center gap-2.5 font-bold text-2xl tracking-tight text-white group"
             >
-              <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-pink-500 p-2 flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:scale-105 transition-transform duration-200">
-                <CloudLogo className="h-5 w-5 text-white" />
-              </div>
-              <span className="bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
-                CloudShare
+              <CloudLogo className="h-9 w-9 drop-shadow-[0_4px_16px_rgba(59,130,246,0.35)] group-hover:scale-105 transition-transform" />
+              <span className="font-bold text-2xl tracking-tight text-white flex items-center">
+                Cloud<span className="text-indigo-400">Share</span>
               </span>
             </Link>
 
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
+            <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
               Instant, end-to-end encrypted temporary file transfers. Your files are encrypted in your browser with AES-256-GCM and automatically purged on expiration.
             </p>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs text-purple-300">
-              <ShieldCheck className="h-3.5 w-3.5 text-purple-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/90 border border-white/10 text-xs text-zinc-300">
+              <ShieldCheck className="h-3.5 w-3.5 text-indigo-400" />
               <span>Zero-knowledge client-side encryption</span>
             </div>
           </div>

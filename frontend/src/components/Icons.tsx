@@ -1,16 +1,13 @@
-export const CloudLogo = ({ className = "h-5 w-5 text-white" }: { className?: string }) => {
+import logoUrl from "@/assets/logo.png";
+
+export const CloudLogo = ({ className = "h-9 w-9" }: { className?: string }) => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 64 64"
-      fill="none"
-      className={className}
-    >
-      <path
-        d="M19.5 45 C15.36 45 12 41.64 12 37.5 C12 33.64 14.93 30.45 18.75 30.05 C20.08 23.65 25.54 18.5 32.2 18.5 C39.14 18.5 44.85 23.95 45.68 30.7 C49.32 31.35 52 34.52 52 38.3 C52 42.44 48.64 45 44.5 45 Z"
-        fill="currentColor"
-      />
-    </svg>
+    <img
+      src={logoUrl}
+      alt="CloudShare"
+      className={`object-contain select-none pointer-events-none ${className}`}
+      draggable={false}
+    />
   );
 };
 

@@ -15,8 +15,12 @@ pnpm-debug.log*
 .env.*.local
 
 # Build outputs
-/dist
-/build
+dist/
+build/
+/frontend/dist/
+/backend/dist/
+/frontend/build/
+/backend/build/
 
 # IDE / editor files
 .vscode/
