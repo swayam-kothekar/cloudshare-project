@@ -263,6 +263,35 @@ const FileDownload: React.FC = () => {
       });
   };
 
+  const renderSecurityInfo = () => (
+    <div className="space-y-6">
+      <div className="space-y-3">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+          End-to-End{" "}
+          <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
+            Encrypted
+          </span>
+        </h1>
+        <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+          Decrypted locally in your browser with AES-256-GCM. CloudShare servers never see or log the unencrypted contents.
+        </p>
+      </div>
+
+      {/* Security Guarantee Box */}
+      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-2.5 text-xs text-zinc-300">
+        <div className={`flex items-center gap-2 font-semibold ${error ? "text-amber-400" : "text-emerald-400"}`}>
+          <ShieldCheck className="h-4 w-4" />
+          <span>{error ? "Burn-After-Reading Verified" : "Cryptographic Verification Passed"}</span>
+        </div>
+        <p className="text-zinc-400 leading-relaxed">
+          {error
+            ? "This file's download quota or expiration timer was exhausted, so the encrypted data was deleted from storage."
+            : "Once the file reaches its expiry time or download quota, it is instantly deleted from storage."}
+        </p>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
       {/* Background ambient lighting with grid texture */}
@@ -275,7 +304,7 @@ const FileDownload: React.FC = () => {
 
       <Navbar />
 
-      <main className="flex-grow flex items-center justify-center px-4 py-12 md:py-16 relative z-10 max-w-5xl mx-auto w-full">
+      <main className="flex-grow flex flex-col items-center justify-center px-4 py-12 md:py-16 relative z-10 max-w-5xl mx-auto w-full">
         <Card className="w-full rounded-2xl border border-white/10 bg-zinc-950/80 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_-20px_rgba(99,102,241,0.15)] overflow-hidden relative">
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
           <CardContent className="p-6 sm:p-10">
@@ -393,8 +422,13 @@ const FileDownload: React.FC = () => {
 
               {/* Right Column: Security Card & Sharing */}
               <div className="lg:col-span-5 flex flex-col space-y-6 pt-6 lg:pt-0 lg:pl-6 border-t lg:border-t-0 lg:border-l border-white/10">
-                {/* Share Actions (shifted to top on mobile) */}
-                <div className="space-y-6 order-1 lg:order-2">
+                {/* Security Info & Guarantee Box (Desktop only inside card) */}
+                <div className="hidden lg:block">
+                  {renderSecurityInfo()}
+                </div>
+
+                {/* Share Actions */}
+                <div className="space-y-6">
                   {/* Share Link again */}
                   <div className="space-y-2">
                     <span className="text-xs font-semibold text-zinc-300">
@@ -455,38 +489,20 @@ const FileDownload: React.FC = () => {
                     </Button>
                   </div>
                 </div>
-
-                {/* Security Info & Guarantee Box (shifted below on mobile) */}
-                <div className="space-y-6 order-2 lg:order-1">
-                  <div className="space-y-3">
-                    <h1 className="text-3xl font-extrabold text-white">
-                      End-to-End{" "}
-                      <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
-                        Encrypted
-                      </span>
-                    </h1>
-                    <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                      Decrypted locally in your browser with AES-256-GCM. CloudShare servers never see or log the unencrypted contents.
-                    </p>
-                  </div>
-
-                  {/* Security Guarantee Box */}
-                  <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-2.5 text-xs text-zinc-300">
-                    <div className={`flex items-center gap-2 font-semibold ${error ? "text-amber-400" : "text-emerald-400"}`}>
-                      <ShieldCheck className="h-4 w-4" />
-                      <span>{error ? "Burn-After-Reading Verified" : "Cryptographic Verification Passed"}</span>
-                    </div>
-                    <p className="text-zinc-400 leading-relaxed">
-                      {error
-                        ? "This file's download quota or expiration timer was exhausted, so the encrypted data was deleted from storage."
-                        : "Once the file reaches its expiry time or download quota, it is instantly deleted from storage."}
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
           </CardContent>
         </Card>
+
+        {/* Security Info in separate container for mobile screens */}
+        <div className="block lg:hidden w-full mt-6">
+          <Card className="w-full rounded-2xl border border-white/10 bg-zinc-950/80 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_-20px_rgba(99,102,241,0.15)] overflow-hidden relative">
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+            <CardContent className="p-6">
+              {renderSecurityInfo()}
+            </CardContent>
+          </Card>
+        </div>
       </main>
 
       <Footer />

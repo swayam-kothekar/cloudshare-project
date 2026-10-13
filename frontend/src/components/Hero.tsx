@@ -81,8 +81,8 @@ export const Hero = () => {
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
 
             {/* Pipeline Header */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-white/10">
-              <div className="flex items-center gap-2.5">
+            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-3 pb-5 border-b border-white/10">
+              <div className="flex items-center justify-center gap-2.5">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
