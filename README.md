@@ -39,7 +39,7 @@
     <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
     <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" />
     <img src="https://img.shields.io/badge/Cloudflare_R2-F38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Cloudflare R2" />
-    <img src="https://img.shields.io/badge/Upstash_Redis-00E9A3?style=flat-square&logo=redis&logoColor=white" alt="Upstash Redis" />
+    <img src="https://img.shields.io/badge/Neon_PostgreSQL-00E599?style=flat-square&logo=postgresql&logoColor=white" alt="Neon PostgreSQL" />
     <img src="https://img.shields.io/badge/AWS_S3-569A31?style=flat-square&logo=amazons3&logoColor=white" alt="AWS S3" />
   </p>
 
@@ -68,7 +68,7 @@ Standard cloud storage services hold your encryption keys, index file contents, 
 | 🔥 **Burn-After-Reading** | Set download limits (1, 5, 10, 50, etc.). File is automatically expunged from storage the moment the quota is exhausted. |
 | ⏱️ **Auto-Destruction Timers** | Granular expiration policies (1 minute, 5 minutes, 1 hour, or 24 hours). Storage records are automatically cleaned up. |
 | 📱 **Mobile QR Code Sharing** | Instant scan-to-download QR codes generated in-browser for quick device-to-device transfers. |
-| 🔗 **Custom Short Vanity URLs** | Generate clean custom vanity paths (`/share/my-custom-name`) backed by high-speed Redis key resolution. |
+| 🔗 **Custom Short Vanity URLs** | Generate clean custom vanity paths (`/share/my-custom-name`) backed by high-speed PostgreSQL key resolution. |
 | 📦 **Multi-File Bundle Zipping** | Select multiple files or folders up to 50MB; automatically zipped and encrypted as a unified cryptographic archive. |
 | ⚡ **Direct Cloud Presigned Transfer** | Zero server bottlenecks — files upload and download directly to S3/R2 storage buckets via time-limited presigned URLs. |
 | 🎨 **Solid, Premium Tech UI** | Fast, responsive interface built with Tailwind CSS, Radix UI primitives, Lucide icons, and zero-distraction solid styling. |
@@ -129,7 +129,7 @@ sequenceDiagram
 ### Backend & Infrastructure
 - **Runtime:** [Node.js](https://nodejs.org/) + [Express](https://expressjs.com/)
 - **Storage:** [Cloudflare R2](https://www.cloudflare.com/developer-platform/r2/) / [AWS S3](https://aws.amazon.com/s3/) (S3-compatible presigned URLs)
-- **Metadata & Short URLs:** [Upstash Redis](https://upstash.com/) (Serverless REST Redis)
+- **Metadata & Short URLs:** [Neon PostgreSQL](https://neon.tech/) (Serverless Postgres)
 - **Deployment:** Vercel / AWS CloudFront + S3 / AWS Lambda
 
 ---
@@ -140,7 +140,7 @@ sequenceDiagram
 - **Node.js** >= 18.0.0
 - **npm** >= 9.0.0
 - An S3-compatible bucket ([Cloudflare R2](https://www.cloudflare.com/products/r2/) or [AWS S3](https://aws.amazon.com/s3/))
-- An [Upstash Redis](https://upstash.com/) database (free tier works great)
+- A [Neon PostgreSQL](https://neon.tech/) serverless database (free tier works great)
 
 ---
 
@@ -171,9 +171,8 @@ R2_ACCESS_KEY_ID=your_r2_access_key_id
 R2_SECRET_ACCESS_KEY=your_r2_secret_access_key
 R2_BUCKET_NAME=cloudshare-files
 
-# Upstash Redis
-UPSTASH_REDIS_REST_URL=https://your-instance.upstash.io
-UPSTASH_REDIS_REST_TOKEN=your_upstash_token
+# Neon PostgreSQL
+DATABASE_URL=postgresql://neondb_owner:your_password@ep-your-endpoint-pooler.region.neon.tech/neondb?sslmode=require
 ```
 
 Start the backend server:
@@ -223,8 +222,7 @@ Visit **http://localhost:5173** to upload, encrypt, and share files locally.
 | `R2_ACCESS_KEY_ID` | S3/R2 API Access Key ID | Yes | `0123456789abcdef` |
 | `R2_SECRET_ACCESS_KEY` | S3/R2 API Secret Access Key | Yes | `9876543210fedcba` |
 | `R2_BUCKET_NAME` | S3/R2 bucket name for ciphertext | Yes | `cloudshare-files` |
-| `UPSTASH_REDIS_REST_URL` | Upstash Redis REST endpoint | Yes | `https://prompt-tiger-1234.upstash.io` |
-| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis authentication token | Yes | `AX6gASQg...` |
+| `DATABASE_URL` | Neon PostgreSQL connection string with SSL | Yes | `postgresql://user:pass@ep-xyz.neon.tech/neondb?sslmode=require` |
 
 ### Frontend (`frontend/.env`)
 
@@ -243,8 +241,9 @@ cloudshare-project/
 │   ├── app.js                   # Express application entrypoint & middleware
 │   ├── generateUploadUrl.js     # Generates S3/R2 presigned upload URLs
 │   ├── generateDownloadUrl.js   # Generates S3/R2 presigned download URLs
-│   ├── generateShortUrl.js      # Vanity short link generation via Upstash Redis
-│   ├── tagFile.js               # Tracks file metadata and download quotas
+│   ├── db.js                    # Neon PostgreSQL database client & schema initializer
+│   ├── generateShortUrl.js      # Vanity short link generation via Neon PostgreSQL
+│   ├── tagFile.js               # Tracks file metadata and download quotas in PostgreSQL
 │   └── package.json
 │
 ├── frontend/
