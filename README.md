@@ -4,7 +4,7 @@
 
   # CloudShare
 
-  **Zero-Knowledge, Client-Side Encrypted Ephemeral File Sharing**
+  **Client-Side Encrypted Ephemeral File Sharing**
 
   An open-source, privacy-first platform that lets you encrypt files in your browser with AES-256-GCM, generate self-destructing links and QR codes, and share confidential bundles with zero footprint.
 
@@ -14,7 +14,7 @@
     <br />
     <a href="#key-features">Key Features</a>
     ·
-    <a href="#zero-knowledge-security-pipeline">Security Architecture</a>
+    <a href="#client-side-security-pipeline">Security Architecture</a>
     ·
     <a href="#quickstart">Quickstart</a>
     ·
@@ -28,7 +28,7 @@
       <img src="https://img.shields.io/badge/Live_Demo-cloudshare.swayamk.tech-7c3aed?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Demo" />
     </a>
     <img src="https://img.shields.io/badge/Security-AES--256--GCM-10b981?style=for-the-badge&logo=shield&logoColor=white" alt="AES-256-GCM" />
-    <img src="https://img.shields.io/badge/Architecture-Zero--Knowledge-6366f1?style=for-the-badge&logo=fingerprint&logoColor=white" alt="Zero-Knowledge" />
+    <img src="https://img.shields.io/badge/Architecture-Client--Side_Encrypted-6366f1?style=for-the-badge&logo=shield&logoColor=white" alt="Client-Side Encrypted" />
     <img src="https://img.shields.io/badge/License-MIT-3b82f6?style=for-the-badge" alt="MIT License" />
   </p>
 
@@ -51,7 +51,7 @@
 
 Standard cloud storage services hold your encryption keys, index file contents, log metadata, and require registered user accounts.
 
-**CloudShare** operates on a **zero-knowledge principle**:
+**CloudShare** operates on a **privacy-first, client-side encryption principle**:
 
 1. **Client-Side Encryption:** Files are compressed with JSZip and encrypted directly in your browser using the native **Web Crypto API (AES-256-GCM)** before upload.
 2. **Key Isolation via URL Hash Fragment:** The raw encryption key is embedded strictly in the URL hash fragment (`https://.../download?...#key=...`). Per RFC 3986, **browsers never transmit hash fragments to servers** in HTTP request headers. Servers only receive opaque ciphertext.
@@ -64,7 +64,7 @@ Standard cloud storage services hold your encryption keys, index file contents, 
 
 | Feature | Description |
 | :--- | :--- |
-| 🛡️ **Zero-Knowledge AES-256-GCM** | Military-grade authenticated encryption computed entirely in-memory on the client device. Server never sees plaintext or keys. |
+| 🛡️ **Client-Side AES-256-GCM** | Military-grade authenticated encryption computed entirely in-memory on the client device. Server never sees plaintext or keys. |
 | 🔥 **Burn-After-Reading** | Set download limits (1, 5, 10, 50, etc.). File is automatically expunged from storage the moment the quota is exhausted. |
 | ⏱️ **Auto-Destruction Timers** | Granular expiration policies (1 minute, 5 minutes, 1 hour, or 24 hours). Storage records are automatically cleaned up. |
 | 📱 **Mobile QR Code Sharing** | Instant scan-to-download QR codes generated in-browser for quick device-to-device transfers. |
@@ -75,7 +75,7 @@ Standard cloud storage services hold your encryption keys, index file contents, 
 
 ---
 
-## 🔒 Zero-Knowledge Security Pipeline
+## 🔒 Client-Side Security Pipeline
 
 The diagram below illustrates how encryption keys remain strictly client-side throughout the entire upload, storage, and retrieval lifecycle:
 

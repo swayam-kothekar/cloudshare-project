@@ -153,7 +153,7 @@ export const Features = () => {
 
               <div className="mt-5 pt-4 border-t border-white/5 flex items-center text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors">
                 <ShieldCheck className="h-3.5 w-3.5 text-indigo-400 mr-1.5 flex-shrink-0" />
-                <span>Zero-knowledge verified</span>
+                <span>Client-side verified</span>
               </div>
             </div>
           ))}

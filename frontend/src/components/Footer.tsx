@@ -25,7 +25,7 @@ export const Footer = () => {
 
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/90 border border-white/10 text-xs text-zinc-300">
               <ShieldCheck className="h-3.5 w-3.5 text-indigo-400" />
-              <span>Zero-knowledge client-side encryption</span>
+              <span>Client-side AES-256 encryption</span>
             </div>
           </div>
 

@@ -30,7 +30,7 @@ export const Hero = () => {
             </span>
             <span className="text-xs font-medium text-zinc-300 flex items-center gap-1.5">
               <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
-              <span>Zero-Knowledge • Client-Side AES-256 • Self-Destructing</span>
+              <span>Client-Side AES-256 • Self-Destructing</span>
             </span>
           </div>
         </div>
@@ -68,7 +68,7 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* Centerpiece Visual: Zero-Knowledge Security Pipeline */}
+        {/* Centerpiece Visual: Cryptographic Security Pipeline */}
         <div className="mt-10 w-full max-w-4xl relative">
           <div className="rounded-2xl border border-white/10 bg-zinc-950/90 backdrop-blur-2xl p-5 sm:p-7 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_-20px_rgba(99,102,241,0.2)] text-left relative overflow-hidden">
             {/* Top specular highlight line */}
@@ -82,7 +82,7 @@ export const Hero = () => {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
                 <span className="text-xs font-mono font-medium text-zinc-300">
-                  Zero-Knowledge Cryptographic Pipeline
+                  Cryptographic Security Pipeline
                 </span>
               </div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-[11px] font-mono text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.15)]">
@@ -125,7 +125,7 @@ export const Hero = () => {
                   Zero Server Access
                 </h3>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  AWS S3 receives raw encrypted ciphertext blobs with zero knowledge of keys, passwords, or file contents.
+                  Storage receives raw encrypted ciphertext blobs without access to keys, passwords, or file contents.
                 </p>
               </div>
 

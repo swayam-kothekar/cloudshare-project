@@ -29,7 +29,7 @@ const FAQList: FAQProps[] = [
   {
     question: "Do I need to register or create an account?",
     answer:
-      "No! CloudShare is built on true zero-knowledge principles. You never need to supply an email address, password, or credit card. There are no tracking cookies or personal data stored on our servers.",
+      "No! CloudShare requires zero registration. You never need to supply an email address, password, or credit card. There are no tracking cookies or personal data stored on our servers.",
     value: "item-3",
   },
   {
